@@ -1,17 +1,19 @@
-export default function Triangle(side1, side2, side3) {
-  this.side1 = side1;
-  this.side2 = side2;
-  this.side3 = side3;
-}
-
-Triangle.prototype.checkType = function() {
-  if ((this.side1 > (this.side2 + this.side3)) || (this.side2 > (this.side1 + this.side3)) || (this.side3 > (this.side1 + this.side2))) {
-    return "not a triangle";
-  } else if ((this.side1 !== this.side2) && ((this.side1 !== this.side3)) && ((this.side2 !== this.side3))) {
-    return "scalene triangle";
-  }  else if ((this.side1 === this.side2) && (this.side1 === this.side3)) {
-    return "equilateral triangle";
-  } else {
-    return "isosceles triangle";
+export default class Nasa {
+  static getImages(date) {
+    return new Promise(function(resolve,reject) {
+      let request = new XMLHttpRequest();
+      const url = `https://api.nasa.gov/planetary/apod?api_key=vqiUBDjfEb87JrTX1jp1vYN8UIviXAOGCzeJe7aY&date=${date}`;
+    
+      request.onload = function() {
+        if (this.status === 200) {
+          resolve(request.response);
+        } else {
+          reject(request.response);
+        }
+      };
+    
+      request.open("GET", url, true);
+      request.send();
+    });
   }
-};
+}
